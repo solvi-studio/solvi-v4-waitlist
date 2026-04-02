@@ -72,22 +72,26 @@ export function HeroSection() {
           className="hero-content mt-8 inline-flex items-center justify-center px-8 py-3 rounded-2xl bg-[#73B7FF] text-black font-semibold text-sm hover:bg-[#9bdcee] transition-colors shadow-md shadow-blue-200"
         >
           <span style={{ display: "inline-flex", lineHeight: 1.15 }} className="text-2xl font-bold text-black">
-            <RunTextAnim text="D" delay={0.3} len={3} total={0.41} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
+            {/* <RunTextAnim text="D" delay={0.3} len={3} total={0.41} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
             <RunTextAnim text="o" delay={0.17} len={2} total={0.13} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
             <RunTextAnim text="w" delay={1.08} len={3} total={0.22} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
-            <RunTextAnim text="n" delay={0.84} len={1} total={0.24} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
-            <RunTextAnim text="l" delay={0.63} len={1} total={0.44} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
+            <RunTextAnim text="n" delay={0.84} len={2} total={0.24} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
+            <RunTextAnim text="l" delay={0.63} len={2} total={0.44} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
             <RunTextAnim text="o" delay={1.19} len={2} total={0.13} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
             <RunTextAnim text="a" delay={1.06} len={2} total={0.23} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
-            <RunTextAnim text="d" delay={1.03} len={3} total={0.41} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
+            <RunTextAnim text="d" delay={1.03} len={3} total={0.41} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} /> */}
+            <RunTextAnim text="Download" delay={0.03} len={3} total={0.41} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
+
             <div style={{ width: 12 }}>
 
             </div>
-            <RunTextAnim text="S" delay={1.23} len={3} total={0.41} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
+            <RunTextAnim text="Solvi" delay={0.03} len={3} total={0.41} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
+
+            {/* <RunTextAnim text="S" delay={1.23} len={3} total={0.41} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
             <RunTextAnim text="o" delay={0.17} len={2} total={0.23} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
-            <RunTextAnim text="l" delay={0.63} len={1} total={0.14} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
+            <RunTextAnim text="l" delay={0.63} len={2} total={0.14} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
             <RunTextAnim text="v" delay={1.01} len={2} total={0.23} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
-            <RunTextAnim text="i" delay={0.42} len={1} total={0.14} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
+            <RunTextAnim text="i" delay={0.42} len={2} total={0.14} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} /> */}
         </span>
         </a>
       </div>

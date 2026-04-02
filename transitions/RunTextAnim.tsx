@@ -22,6 +22,12 @@ export interface RunTextAnimProps {
   total?: number;
   /** Seconds before this chunk starts (after curtainDone). */
   delay?: number;
+  /** Split long text into per-character chunks with staggered delays. */
+  splitText?: boolean;
+  /** Delay added for each next character when splitText is enabled. */
+  charStagger?: number;
+  /** Extra delay before hover tween starts (used for split-text cascade). */
+  hoverDelay?: number;
   /** Optional external hover target (e.g. button) this chunk can react to. */
   hoverTargetRef?: React.RefObject<HTMLElement | null>;
   className?: string;
@@ -33,24 +39,33 @@ export function RunTextAnim({
   len = 1,
   total = 1,
   delay = 0,
+  splitText = true,
+  charStagger = 0.04,
+  hoverDelay = 0,
   hoverTargetRef,
   className,
   style,
 }: RunTextAnimProps) {
+  const shouldSplit = splitText && text.length > 1;
+
   const wrapperRef = useRef<HTMLSpanElement>(null);
   // One ref per copy — populated during render via callback refs
   const copyRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const ctxRef   = useRef<gsap.Context | null>(null);
   const curtainDone = useUiStore((s) => s.curtainDone);
   const [isTargetHovered, setIsTargetHovered] = useState(false);
+  const introDoneRef = useRef(false);
 
   // Rebuild ref array length when len changes
   useEffect(() => {
+    if (shouldSplit) return;
     copyRefs.current = Array.from({ length: len }, (_, i) => copyRefs.current[i] ?? null);
-  }, [len]);
+  }, [len, shouldSplit]);
 
   // Listen to hover state from an external target element (e.g. download button).
   useEffect(() => {
+    if (shouldSplit) return;
+
     const el = hoverTargetRef?.current;
     if (!el) return;
 
@@ -59,15 +74,15 @@ export function RunTextAnim({
 
     el.addEventListener("mouseenter", handleEnter);
     el.addEventListener("mouseleave", handleLeave);
-
     return () => {
       el.removeEventListener("mouseenter", handleEnter);
       el.removeEventListener("mouseleave", handleLeave);
     };
-  }, [hoverTargetRef]);
+  }, [hoverTargetRef, shouldSplit]);
 
   useEffect(() => {
-    if (!curtainDone) return;
+    if (shouldSplit || !curtainDone) return;
+    introDoneRef.current = false;
 
     ctxRef.current?.revert();
 
@@ -92,7 +107,12 @@ export function RunTextAnim({
       // Park all copies below the clip window — GSAP fully owns transform
       gsap.set(copies, { y: h, opacity: 1 });
 
-      const tl = gsap.timeline({ delay });
+      const tl = gsap.timeline({
+        delay,
+        onComplete: () => {
+          introDoneRef.current = true;
+        },
+      });
 
       copies.forEach((el, i) => {
         const isLast = i === copies.length - 1;
@@ -126,7 +146,83 @@ export function RunTextAnim({
       ctxRef.current?.revert();
       ctxRef.current = null;
     };
-  }, [curtainDone, text, len, total, delay]);
+  }, [curtainDone, text, len, total, delay, shouldSplit]);
+
+
+  useEffect(() => {
+    if (shouldSplit || !curtainDone || !introDoneRef.current) return;
+    const baseTween = { duration: 0.58, delay: hoverDelay, overwrite: "auto" as const };
+
+    const copies = copyRefs.current.filter(Boolean) as HTMLSpanElement[];
+    if (copies.length === 0) return;
+
+    const finalCopy = copies[copies.length - 1];
+    const secondCopy = copies[copies.length - 2];
+
+    gsap.killTweensOf(finalCopy);
+    if (secondCopy) gsap.killTweensOf(secondCopy);
+
+    const h = (wrapperRef.current?.offsetHeight ?? 60) * 2.2;
+
+    if (isTargetHovered) {
+      gsap.to(finalCopy, {
+        y: h,
+        scale: 1,
+        color: "#111111",
+        ease: "sine.out",
+        ...baseTween,
+      });
+
+      if (secondCopy) {
+        gsap.to(secondCopy, {
+          y: 0,
+          scale: 1,
+          color: "#111111",
+          ...baseTween,
+        });
+      }
+      return;
+    }
+
+    gsap.to(finalCopy, {
+        y: 0,
+        scale: 1,
+        color: "inherit",
+        ...baseTween,
+      });
+
+    if (secondCopy) {
+      gsap.to(secondCopy, {
+        y: -h,
+        scale: 1,
+        color: "#111111",
+        ...baseTween,
+      });
+    }
+  }, [isTargetHovered, curtainDone, shouldSplit, hoverDelay]);
+
+  if (shouldSplit) {
+    return (
+      <span className={className} style={{ display: "inline-flex", ...style }}>
+        {Array.from(text).map((char, index) => {
+          const glyph = char === " " ? "\u00A0" : char;
+
+          return (
+            <RunTextAnim
+              key={`${char}-${index}`}
+              text={glyph}
+              len={len}
+              total={total}
+              delay={delay + index * charStagger}
+              splitText={false}
+              hoverDelay={index * charStagger}
+              hoverTargetRef={hoverTargetRef}
+            />
+          );
+        })}
+      </span>
+    );
+  }
 
   return (
     // Outer span: clipping window — must be position:relative + explicit height
