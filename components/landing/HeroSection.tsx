@@ -1,15 +1,22 @@
 "use client";
 
-import { useRef, useEffect } from "react";
-import { gsap } from "@/lib/gsap";
 import { Mascot } from "@/components/ui/mascot";
+import { useUiStore } from "@/hooks/useUiStore";
+import { gsap } from "@/lib/gsap";
+import { RunTextAnim } from "@/transitions/RunTextAnim";
+import { useEffect, useRef } from "react";
 
 export function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
+  const downloadButtonRef = useRef<HTMLAnchorElement>(null);
+  const setCurtainDone = useUiStore((s) => s.setCurtainDone);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+      const tl = gsap.timeline({
+        defaults: { ease: "power3.out" },
+        onComplete: () => setCurtainDone(),
+      });
 
       // Section drops down: clipPath reveals from top → bottom, curve stays throughout
       tl.fromTo(
@@ -28,12 +35,13 @@ export function HeroSection() {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, []);
+
+  }, [setCurtainDone]);
 
   return (
     <section
       ref={sectionRef}
-      className="relative w-full min-h-[500px] bg-[#E8F4F0] overflow-hidden"
+      className="relative w-full min-h-125 bg-[#E8F4F0] overflow-hidden"
       style={{ borderRadius: "0 0 50% 50% / 0 0 80px 80px" }}
     >
       {/* Mascot slides in after section drop (delay matches clipPath duration) */}
@@ -53,15 +61,34 @@ export function HeroSection() {
           organised
         </p>
 
+
         <p className="hero-content mt-5 text-sm text-gray-500 max-w-xs leading-relaxed">
           Scroll less aimlessly, create more intentionally. Everything you save, finally in one place
         </p>
 
         <a
+          ref={downloadButtonRef}
           href="#download"
           className="hero-content mt-8 inline-flex items-center justify-center px-8 py-3 rounded-2xl bg-[#73B7FF] text-black font-semibold text-sm hover:bg-[#9bdcee] transition-colors shadow-md shadow-blue-200"
         >
-          Download Solvi
+          <span style={{ display: "inline-flex", lineHeight: 1.15 }} className="text-2xl font-bold text-black">
+            <RunTextAnim text="D" delay={0.3} len={3} total={0.41} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
+            <RunTextAnim text="o" delay={0.17} len={2} total={0.13} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
+            <RunTextAnim text="w" delay={1.08} len={3} total={0.22} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
+            <RunTextAnim text="n" delay={0.84} len={1} total={0.24} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
+            <RunTextAnim text="l" delay={0.63} len={1} total={0.44} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
+            <RunTextAnim text="o" delay={1.19} len={2} total={0.13} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
+            <RunTextAnim text="a" delay={1.06} len={2} total={0.23} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
+            <RunTextAnim text="d" delay={1.03} len={3} total={0.41} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
+            <div style={{ width: 12 }}>
+
+            </div>
+            <RunTextAnim text="S" delay={1.23} len={3} total={0.41} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
+            <RunTextAnim text="o" delay={0.17} len={2} total={0.23} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
+            <RunTextAnim text="l" delay={0.63} len={1} total={0.14} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
+            <RunTextAnim text="v" delay={1.01} len={2} total={0.23} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
+            <RunTextAnim text="i" delay={0.42} len={1} total={0.14} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
+        </span>
         </a>
       </div>
     </section>

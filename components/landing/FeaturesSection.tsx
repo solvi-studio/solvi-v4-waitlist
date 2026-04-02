@@ -3,8 +3,8 @@
 import { CarouselDots } from "@/components/ui/CarouselDots";
 import { FeatureCard } from "@/components/ui/FeatureCard";
 import { gsap } from "@/lib/gsap";
-import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 
 export function FeaturesSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -33,7 +33,7 @@ export function FeaturesSection() {
             <FeatureCard
               title="Organise your chaos creative space"
               roration={10}
-              image={<Image src="/yellow.png" alt="" width={200} height={200} style={{ height: "auto" }} className="object-contain" priority />}
+              image={<Image src="/yellow.png" alt="" width={200} height={200} style={{ width: "auto", height: "auto" }} className="object-contain" priority />}
               caption="Get instant, actionable prompts for your own niche content plan"
               captionColor="#FBA400"
             />
@@ -42,7 +42,7 @@ export function FeaturesSection() {
           <div className="feature-card" style={{ opacity: 0 }}>
             <FeatureCard
               title="Analyse video for you"
-              image={<Image src="/red.png" alt="" width={200} height={200} style={{ height: "auto" }} className="object-contain" />}
+              image={<Image src="/red.png" alt="" width={200} height={200} style={{ width: "auto", height: "auto" }} className="object-contain" />}
               caption="Automatically group your saved videos into creative patterns"
               bgColor="#A7F3D0"
               captionColor="#EF524E"
@@ -53,7 +53,7 @@ export function FeaturesSection() {
             <FeatureCard
               title="Turn your inspo to post-ready ideas"
               roration={-3}
-              image={<Image src="/blue.png" alt="" width={200} height={200} style={{ height: "auto" }} className="object-contain" />}
+              image={<Image src="/blue.png" alt="" width={200} height={200} style={{ width: "auto", height: "auto" }} className="object-contain" />}
               caption="Break down every save DNA so you can learn the strategy"
               captionColor="#3377FF"
             />
