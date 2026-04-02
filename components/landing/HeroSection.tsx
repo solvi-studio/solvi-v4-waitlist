@@ -29,7 +29,7 @@ export function HeroSection() {
       tl.fromTo(
         ".hero-content",
         { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 0.7, stagger: 0.12 },
+        { opacity: 1, y: 0, duration: 0.7, stagger: 0.32 },
         "-=0.4"
       );
     }, sectionRef);
@@ -41,28 +41,28 @@ export function HeroSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full min-h-125 bg-[#E8F4F0] overflow-hidden"
+      className="relative w-full min-h-125 bg-[#E8F4F0] overflow-hidden h-[80vh]"
       style={{ borderRadius: "0 0 50% 50% / 0 0 80px 80px" }}
     >
       {/* Mascot slides in after section drop (delay matches clipPath duration) */}
       <Mascot delay={0.8} />
 
       {/* Hero content */}
-      <div className="flex flex-col items-center text-center px-6 pt-16 pb-24 max-w-xl mx-auto">
-        <h1 className="hero-content text-7xl font-black tracking-tight text-gray-900">
+      <div className="flex flex-col items-center text-center px-6 pt-16 pb-24 max-w-xl mx-auto ">
+        <h1 className="hero-content text-7xl tracking-tight text-gray-900 font-editorial font-[800] italic">
           Welcome
         </h1>
 
-        <p className="hero-content mt-4 text-lg font-bold text-gray-900 flex flex-wrap items-center justify-center gap-2">
+        <p className="hero-content mt-4 text-lg font-bold text-gray-900 flex flex-wrap items-center justify-center gap-2 font-editorial font-[400] italic">
           to your new
-          <span className="bg-[#F5C842] text-gray-900 font-bold px-4 py-1.5 rounded-full text-base">
+          <span className="bg-[#F5C842] text-gray-900 font-bold px-4 py-1.5 rounded-full text-base -rotate-4">
             bookmark partner
           </span>
           organised
         </p>
 
 
-        <p className="hero-content mt-5 text-sm text-gray-500 max-w-xs leading-relaxed">
+        <p className="hero-content mt-5 text-sm text-gray-500 max-w-[350px] leading-relaxed font-inter font-[800]">
           Scroll less aimlessly, create more intentionally. Everything you save, finally in one place
         </p>
 
@@ -80,7 +80,7 @@ export function HeroSection() {
             <RunTextAnim text="o" delay={1.19} len={2} total={0.13} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
             <RunTextAnim text="a" delay={1.06} len={2} total={0.23} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
             <RunTextAnim text="d" delay={1.03} len={3} total={0.41} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} /> */}
-            <RunTextAnim text="Download" delay={0.03} len={3} total={0.41} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
+            <RunTextAnim text="Download" delay={0.03} len={2} total={0.21} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
 
             <div style={{ width: 12 }}>
 

@@ -25,25 +25,25 @@ export function FeaturesSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="w-full py-20 px-6 bg-white">
-      <div className="max-w-3xl mx-auto flex flex-col items-center gap-10">
-        <div className="flex flex-col sm:flex-row items-start justify-center gap-10">
+    <section ref={sectionRef} className="w-full py-20 px-6 bg-white h-[120vh]">
+      <div className="max-w-2xl mx-auto flex flex-col items-center gap-10">
+        <div className="flex flex-col sm:flex-row items-start justify-evenly md:gap-15 lg:gap-32 sm:gap-10">
 
           <div className="feature-card" style={{ opacity: 0 }}>
             <FeatureCard
-              title="Organise your chaos creative space"
+              title={<>Organise your <strong>chaos</strong> creative space</>}
               roration={10}
               image={<Image src="/yellow.png" alt="" width={200} height={200} style={{ width: "auto", height: "auto" }} className="object-contain" priority />}
-              caption="Get instant, actionable prompts for your own niche content plan"
+              caption={<>Automatically group your saved videos into creative patterns</>}
               captionColor="#FBA400"
             />
           </div>
 
           <div className="feature-card" style={{ opacity: 0 }}>
             <FeatureCard
-              title="Analyse video for you"
+              title={<><strong>Analyse</strong> video for you</>}
               image={<Image src="/red.png" alt="" width={200} height={200} style={{ width: "auto", height: "auto" }} className="object-contain" />}
-              caption="Automatically group your saved videos into creative patterns"
+              caption="Break down every save DNA so you can learn the strategy"
               bgColor="#A7F3D0"
               captionColor="#EF524E"
             />
@@ -51,10 +51,10 @@ export function FeaturesSection() {
 
           <div className="feature-card" style={{ opacity: 0 }}>
             <FeatureCard
-              title="Turn your inspo to post-ready ideas"
+              title={<>Turn your inspo to <strong>post-ready ideas</strong> </>}
               roration={-3}
               image={<Image src="/blue.png" alt="" width={200} height={200} style={{ width: "auto", height: "auto" }} className="object-contain" />}
-              caption="Break down every save DNA so you can learn the strategy"
+              caption="Get instant, actionable prompts for your own niche content plan"
               captionColor="#3377FF"
             />
           </div>

@@ -34,3 +34,20 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+
+ How to use fonts components:
+
+  // Headings — PP Editorial New
+  <h1 className="font-editorial font-[200]">Welcome to Solvi</h1>
+  <h1 className="font-editorial font-[200] italic">Welcome to Solvi</h1>
+  <h2 className="font-editorial font-[800]">Section Title</h2>
+
+  // Body / UI — Inter (this is now the default, no class needed)
+  <p>Normal body text uses Inter automatically</p>
+  <button className="font-sans font-medium">Explicit Inter</button>
+
+  Available Editorial weights: 200 (ultralight), 400 (regular), 800 (ultrabold) — all with italic variants.
+
+  Note on Switzer: It's not on Google Fonts. Inter is effectively identical for UI purposes and is the industry standard. If you want Switzer specifically, download it from Fontshare and add it via next/font/local
+  the same way as Editorial New.
