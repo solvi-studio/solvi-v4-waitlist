@@ -162,7 +162,7 @@ export function BeaconWrap({
       .to(wrap, { scaleX: 1, scaleY: 1, duration: 0.22 * d, ease: "elastic.out(1, 0.4)" }, 0.08 * d);
 
     return () => { tl.kill(); };
-  }, [color, rayCount, rayLength, speed, gap]);
+  }, [color, rayCount, rayLength, speed, gap, sideWeight]);
 
   return (
     <span ref={wrapRef} className="relative inline-flex items-center justify-center">
