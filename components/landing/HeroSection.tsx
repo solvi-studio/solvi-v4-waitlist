@@ -5,10 +5,13 @@ import { useUiStore } from "@/hooks/useUiStore";
 import { gsap } from "@/lib/gsap";
 import { RunTextAnim } from "@/transitions/RunTextAnim";
 import { useEffect, useRef } from "react";
+import { BeaconWrap } from "@/components/landing/testing";
+
 
 export function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const downloadButtonRef = useRef<HTMLAnchorElement>(null);
+  const setCustomCursorText = useUiStore((s) => s.setCursorText);
   const setCurtainDone = useUiStore((s) => s.setCurtainDone);
 
   useEffect(() => {
@@ -55,9 +58,14 @@ export function HeroSection() {
 
         <p className="hero-content mt-4 text-lg font-bold text-gray-900 flex flex-wrap items-center justify-center gap-2 font-editorial font-[400] italic">
           to your new
-          <span className="bg-[#F5C842] text-gray-900 font-bold px-4 py-1.5 rounded-full text-base -rotate-4">
-            bookmark partner
-          </span>
+          <div className="-rotate-1">
+            <BeaconWrap color="#4F46E5" rayCount={20} gap={10} speed={1.5} sideWeight={2}>
+              <span className="bg-[#F5C842] text-gray-900 font-bold px-4 py-1.5 rounded-full text-base">
+                bookmark partner
+              </span>
+            </BeaconWrap>
+
+          </div>
           organised
         </p>
 
@@ -69,6 +77,8 @@ export function HeroSection() {
         <a
           ref={downloadButtonRef}
           href="#download"
+          onMouseEnter={() => setCustomCursorText("yes click this")}
+          onMouseLeave={() => setCustomCursorText("")}
           className="hero-content mt-8 inline-flex items-center justify-center px-8 py-3 rounded-2xl bg-[#73B7FF] text-black font-semibold text-sm hover:bg-[#9bdcee] transition-colors shadow-md shadow-blue-200"
         >
           <span style={{ display: "inline-flex", lineHeight: 1.15 }} className="text-2xl font-bold text-black">

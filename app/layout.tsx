@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Inter } from "next/font/google";
+import CustomCursor from "@/components/customCursor";
+
 import "./globals.css";
 
 const editorial = localFont({
@@ -37,7 +39,10 @@ export default function RootLayout({
       lang="en"
       className={`${editorial.variable} ${inter.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <CustomCursor />
+        {children}
+      </body>
     </html>
   );
 }
