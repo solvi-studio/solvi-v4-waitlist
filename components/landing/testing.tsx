@@ -11,6 +11,9 @@ interface BeaconWrapProps {
   speed?: number;
   gap?: number;
   sideWeight?: number; // >1 = more rays on ends, <1 = fewer. default 1 = even
+  rotate?: number;
+  hoverOnly?: boolean;
+  onHoverChange?: (hovering: boolean) => void;
 }
 
 function buildPillRays(
@@ -23,7 +26,8 @@ function buildPillRays(
   rayStroke: number,
   count: number,
   color: string,
-  sideWeight: number
+  sideWeight: number,
+  rotate: number = 0,
 ): SVGLineElement[] {
   g.innerHTML = "";
   const lines: SVGLineElement[] = [];
@@ -44,11 +48,13 @@ function buildPillRays(
   const wLeft = leftArcLen * sideWeight;
   const wTotal = wTop + wRight + wBottom + wLeft;
 
+  const rotRad = (rotate * Math.PI) / 180;
+  const cosR = Math.cos(rotRad);
+  const sinR = Math.sin(rotRad);
+
   for (let i = 0; i < count; i++) {
-    // Step evenly through the *weighted* perimeter
     const wt = (i / count) * wTotal;
 
-    // Map weighted position back to a real perimeter position
     let t: number;
     if (wt < wTop) {
       t = wt;
@@ -63,12 +69,10 @@ function buildPillRays(
     let px: number, py: number, nx: number, ny: number;
 
     if (t < topLen) {
-      // Top edge — normal points up
       px = r + t;
       py = 0;
       nx = 0; ny = -1;
     } else if (t < topLen + rightArcLen) {
-      // Right semicircle — normal is radial from right arc center
       const arcT = (t - topLen) / rightArcLen;
       const angle = -Math.PI / 2 + arcT * Math.PI;
       px = (width - r) + Math.cos(angle) * r;
@@ -76,13 +80,11 @@ function buildPillRays(
       nx = Math.cos(angle);
       ny = Math.sin(angle);
     } else if (t < topLen + rightArcLen + bottomLen) {
-      // Bottom edge — normal points down
       const d = t - topLen - rightArcLen;
       px = (width - r) - d;
       py = height;
       nx = 0; ny = 1;
     } else {
-      // Left semicircle — normal is radial from left arc center
       const arcT = (t - topLen - rightArcLen - bottomLen) / leftArcLen;
       const angle = Math.PI / 2 + arcT * Math.PI;
       px = r + Math.cos(angle) * r;
@@ -90,6 +92,18 @@ function buildPillRays(
       nx = Math.cos(angle);
       ny = Math.sin(angle);
     }
+
+    // Rotate position around pill center
+    const relX = px - width / 2;
+    const relY = py - height / 2;
+    px = relX * cosR - relY * sinR + width / 2;
+    py = relX * sinR + relY * cosR + height / 2;
+
+    // Rotate normal by the same angle
+    const rnx = nx * cosR - ny * sinR;
+    const rny = nx * sinR + ny * cosR;
+    nx = rnx;
+    ny = rny;
 
     const x1 = pad + px + nx * gap;
     const y1 = pad + py + ny * gap;
@@ -121,10 +135,14 @@ export function BeaconWrap({
   speed = 1,
   gap = 8,
   sideWeight = 1,
+  rotate = 0,
+  hoverOnly = false,
+  onHoverChange,
 }: BeaconWrapProps) {
   const wrapRef = useRef<HTMLSpanElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const gRef = useRef<SVGGElement>(null);
+  const tlRef = useRef<gsap.core.Timeline | null>(null);
 
   useEffect(() => {
     const wrap = wrapRef.current;
@@ -141,10 +159,11 @@ export function BeaconWrap({
     svg.style.left = `-${pad}px`;
     svg.style.top = `-${pad}px`;
 
-    const lines = buildPillRays(g, width, height, pad, gap, rayLength, rayStroke, rayCount, color, sideWeight);
+    const lines = buildPillRays(g, width, height, pad, gap, rayLength, rayStroke, rayCount, color, sideWeight, rotate);
 
     const d = 1 / speed;
-    const tl = gsap.timeline({ repeat: -1, repeatDelay: 0.4 * d });
+    const tl = gsap.timeline({ repeat: -1, repeatDelay: 0.4 * d, paused: hoverOnly });
+    tlRef.current = tl;
 
     tl.to(lines, {
       opacity: 1,
@@ -162,10 +181,28 @@ export function BeaconWrap({
       .to(wrap, { scaleX: 1, scaleY: 1, duration: 0.22 * d, ease: "elastic.out(1, 0.4)" }, 0.08 * d);
 
     return () => { tl.kill(); };
-  }, [color, rayCount, rayLength, speed, gap, sideWeight]);
+  }, [color, rayCount, rayLength, speed, gap, sideWeight, rotate, hoverOnly]);
+
+  const handleMouseEnter = () => {
+    if (hoverOnly) tlRef.current?.restart();
+    onHoverChange?.(true);
+  };
+
+  const handleMouseLeave = () => {
+    if (hoverOnly) {
+      tlRef.current?.pause();
+      tlRef.current?.progress(0);
+    }
+    onHoverChange?.(false);
+  };
 
   return (
-    <span ref={wrapRef} className="relative inline-flex items-center justify-center">
+    <span
+      ref={wrapRef}
+      className="relative inline-flex items-center justify-center"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       <svg
         ref={svgRef}
         className="absolute pointer-events-none overflow-visible"

@@ -1,18 +1,43 @@
 "use client";
 
+import { BeaconWrap } from "@/components/landing/testing";
 import { Mascot } from "@/components/ui/mascot";
 import { useUiStore } from "@/hooks/useUiStore";
 import { gsap } from "@/lib/gsap";
 import { RunTextAnim } from "@/transitions/RunTextAnim";
 import { useEffect, useRef } from "react";
-import { BeaconWrap } from "@/components/landing/testing";
 
 
 export function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const downloadButtonRef = useRef<HTMLAnchorElement>(null);
+  const organisedRef = useRef<HTMLSpanElement>(null);
+  const tonewRef = useRef<HTMLSpanElement>(null);
+  const pillRef = useRef<HTMLSpanElement>(null);
   const setCustomCursorText = useUiStore((s) => s.setCursorText);
   const setCurtainDone = useUiStore((s) => s.setCurtainDone);
+
+  const handleBeaconHover = (hovering: boolean) => {
+    const pillRect = pillRef.current?.getBoundingClientRect();
+
+    const animateRef = (el: HTMLSpanElement | null, defaultDir: "left" | "right") => {
+      if (!el || !pillRect) return;
+      const rect = el.getBoundingClientRect();
+      const sameRow = Math.abs(rect.top - pillRect.top) < pillRect.height * 0.5;
+
+      if (sameRow) {
+        // Same line — slide horizontally
+        gsap.to(el, { x: hovering ? (defaultDir === "left" ? -30 : 30) : 0, y: 0, duration: 0.4, ease: "power2.out" });
+      } else {
+        // Wrapped above or below — slide vertically
+        const above = rect.bottom <= pillRect.top + pillRect.height * 0.5;
+        gsap.to(el, { y: hovering ? (above ? -30 : 30) : 0, x: 0, duration: 0.4, ease: "power2.out" });
+      }
+    };
+
+    animateRef(tonewRef.current, "left");
+    animateRef(organisedRef.current, "right");
+  };
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -41,6 +66,8 @@ export function HeroSection() {
 
   }, [setCurtainDone]);
 
+  
+
   return (
     <section
       ref={sectionRef}
@@ -56,18 +83,18 @@ export function HeroSection() {
           Welcome
         </h1>
 
-        <p className="hero-content mt-4 text-lg font-bold text-gray-900 flex flex-wrap items-center justify-center gap-2 font-editorial font-[400] italic">
-          to your new
-          <div className="-rotate-1">
-            <BeaconWrap color="#4F46E5" rayCount={20} gap={10} speed={1.5} sideWeight={2}>
-              <span className="bg-[#F5C842] text-gray-900 font-bold px-4 py-1.5 rounded-full text-base">
-                bookmark partner
-              </span>
-            </BeaconWrap>
+        <p className="hero-content mt-4 text-lg font-bold text-gray-900 flex flex-wrap items-center justify-center gap-2 font-editorial font-[400] italic mt-10">
+          <span ref={tonewRef} className="inline-block">to your new</span>
+            <span ref={pillRef} className="inline-flex">
+              <BeaconWrap color="#F5C842" rayCount={20} gap={10} speed={1.5} sideWeight={2} rotate={-7} hoverOnly onHoverChange={handleBeaconHover}>
+                <span className="bg-[#F5C842] text-gray-900 font-bold px-4 py-1.5 rounded-full text-base -rotate-7">
+                  bookmark partner
+                </span>
+              </BeaconWrap>
+            </span>
 
-          </div>
-          organised
-        </p>
+          <span ref={organisedRef} className="inline-block">organised</span>
+        </p>.
 
 
         <p className="hero-content mt-5 text-sm text-gray-500 max-w-[350px] leading-relaxed font-inter font-[800]">
@@ -91,10 +118,7 @@ export function HeroSection() {
             <RunTextAnim text="a" delay={1.06} len={2} total={0.23} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
             <RunTextAnim text="d" delay={1.03} len={3} total={0.41} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} /> */}
             <RunTextAnim text="Download" delay={0.03} len={2} total={0.21} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
-
-            <div style={{ width: 12 }}>
-
-            </div>
+            <span aria-hidden="true" style={{ display: "inline-block", width: 12 }} />
             <RunTextAnim text="Solvi" delay={0.03} len={3} total={0.41} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
 
             {/* <RunTextAnim text="S" delay={1.23} len={3} total={0.41} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
