@@ -1,7 +1,7 @@
 "use client";
 
 import { BeaconWrap } from "@/components/landing/testing";
-import { Mascot } from "@/components/ui/mascot";
+import { Mascot, MascotHandle } from "@/components/ui/mascot";
 import { useUiStore } from "@/hooks/useUiStore";
 import { gsap } from "@/lib/gsap";
 import { RunTextAnim } from "@/transitions/RunTextAnim";
@@ -14,6 +14,7 @@ export function HeroSection() {
   const organisedRef = useRef<HTMLSpanElement>(null);
   const tonewRef = useRef<HTMLSpanElement>(null);
   const pillRef = useRef<HTMLSpanElement>(null);
+  const mascotRef = useRef<MascotHandle>(null);
   const setCustomCursorText = useUiStore((s) => s.setCursorText);
   const setCurtainDone = useUiStore((s) => s.setCurtainDone);
 
@@ -35,9 +36,13 @@ export function HeroSection() {
       }
     };
 
+    hovering ? mascotRef.current?.wave() : mascotRef.current?.rest();
     animateRef(tonewRef.current, "left");
     animateRef(organisedRef.current, "right");
   };
+
+
+
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -75,7 +80,7 @@ export function HeroSection() {
       style={{ borderRadius: "0 0 50% 50% / 0 0 80px 80px" }}
     >
       {/* Mascot slides in after section drop (delay matches clipPath duration) */}
-      <Mascot delay={0.8} />
+      <Mascot ref={mascotRef} delay={0.8} />
 
       {/* Hero content */}
       <div className="flex flex-col items-center text-center px-6 pt-16 pb-24 max-w-xl mx-auto ">
