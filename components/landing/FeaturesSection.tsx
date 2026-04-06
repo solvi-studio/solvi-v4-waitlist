@@ -32,7 +32,7 @@ export function FeaturesSection() {
           <div className="feature-card" style={{ opacity: 0 }}>
             <FeatureCard
               title={<>Organise your <strong>chaos</strong> creative space</>}
-              roration={10}
+              rotation={10}
               image={<Image src="/yellow.png" alt="" width={200} height={200} style={{ width: "auto", height: "auto" }} className="object-contain" priority />}
               caption={<>Automatically group your saved videos into creative patterns</>}
               captionColor="#FBA400"
@@ -52,7 +52,7 @@ export function FeaturesSection() {
           <div className="feature-card" style={{ opacity: 0 }}>
             <FeatureCard
               title={<>Turn your inspo to <strong>post-ready ideas</strong> </>}
-              roration={-3}
+              rotation={-3}
               image={<Image src="/blue.png" alt="" width={200} height={200} style={{ width: "auto", height: "auto" }} className="object-contain" />}
               caption="Get instant, actionable prompts for your own niche content plan"
               captionColor="#3377FF"
