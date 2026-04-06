@@ -248,7 +248,7 @@ export function MotionSection() {
           className="absolute inset-0 w-full h-full"
           fill="none"
         >
-          <path ref={pathRef} d={PATH_D} stroke="black" strokeWidth="2" />
+          <path ref={pathRef} d={PATH_D} stroke="indigo" strokeWidth="5" />
         </svg>
       )}
 
