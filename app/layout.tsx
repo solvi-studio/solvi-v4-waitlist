@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Inter } from "next/font/google";
 import CustomCursor from "@/components/customCursor";
+import { SmoothScroll } from "@/components/SmoothScroll";
 
 import "./globals.css";
 
@@ -41,7 +42,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <CustomCursor />
-        {children}
+        <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>
   );

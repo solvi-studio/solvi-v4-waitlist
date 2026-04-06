@@ -1,8 +1,8 @@
 "use client"
 
-import gsap from "gsap"
-import { useEffect, useRef } from "react"
-import { useUiStore } from "@/hooks/useUiStore"
+import { useUiStore } from "@/hooks/useUiStore";
+import gsap from "gsap";
+import { useEffect, useRef } from "react";
 
 const EDGE_THRESHOLD = 120; // px from edge to flip
 const TEXT_OFFSET = 16;     // px gap from cursor center
@@ -24,6 +24,14 @@ const CustomCursor = () => {
         gsap.set(follower, { xPercent: -50, yPercent: -50 });
         gsap.set(cursor, { xPercent: -50, yPercent: -50 });
 
+        const prevPos = { x: 0, y: 0 };
+        let isHovered = false;
+        let restTimer: ReturnType<typeof setTimeout> | null = null;
+
+        const resetStretch = () => {
+            gsap.to(cursor, { scaleX: 1, scaleY: 1, rotate: 0, duration: 0.4, ease: "elastic.out(1, 0.5)" });
+        };
+
         const moveCursor = (e: MouseEvent): void => {
             const { clientX: x, clientY: y } = e;
             const nearRight = x > window.innerWidth - EDGE_THRESHOLD;
@@ -31,41 +39,70 @@ const CustomCursor = () => {
 
             if (!hasMovedRef.current) {
                 hasMovedRef.current = true;
+                prevPos.x = x;
+                prevPos.y = y;
                 gsap.set(cursor, { x, y });
                 gsap.set(follower, { x, y });
-                gsap.to([cursor, follower, textEl], { opacity: 1, duration: 0.3 });
+                gsap.to([cursor, follower, textEl], { opacity: 1, duration: 0.6 });
             }
 
-            gsap.to(follower, { x, y, duration: 0.5, ease: "sine.out" });
-            gsap.to(cursor, { x, y, duration: 0.2 });
+            const dx = x - prevPos.x;
+            const dy = y - prevPos.y;
+            prevPos.x = x;
+            prevPos.y = y;
 
-            // Position text: flip horizontally near right edge, vertically near bottom
+            // Only stretch when not hovering an interactive element
+            if (!isHovered) {
+                const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+                const distance = Math.sqrt(dx * dx + dy * dy) * 0.04;
+
+                gsap.to(cursor, {
+                    rotate: angle,
+                    scaleX: 1 + Math.min(distance, 1),
+                    scaleY: 1 - Math.min(distance, 0.3),
+                    duration: 0.1,
+                    ease: "power2.out",
+                    overwrite: "auto",
+                });
+
+                // Reset stretch after mouse stops
+                if (restTimer) clearTimeout(restTimer);
+                restTimer = setTimeout(resetStretch, 80);
+            }
+
+            gsap.to(follower, { x, y, duration: 0.2, ease: "sine.out" });
+            gsap.to(cursor, { x, y, duration: 0.2, overwrite: false });
+
             const textX = nearRight ? x - TEXT_OFFSET : x + TEXT_OFFSET;
             const textY = nearBottom ? y - TEXT_OFFSET : y + TEXT_OFFSET;
-            const xAnchor = nearRight ? "-100%" : "0%";
-            const yAnchor = nearBottom ? "-100%" : "0%";
 
             gsap.to(textEl, {
                 x: textX,
                 y: textY,
-                xPercent: parseFloat(xAnchor),
-                yPercent: parseFloat(yAnchor),
-                duration: 0.2,
+                xPercent: nearRight ? -100 : 0,
+                yPercent: nearBottom ? -100 : 0,
+                duration: 0.25,
+                ease: "sine.out"
             });
         };
 
         const onEnterInteractive = () => {
+            isHovered = true;
+            if (restTimer) clearTimeout(restTimer);
+            // Reset stretch first, then shrink
+            gsap.to(cursor, { scaleX: 1, scaleY: 1, rotate: 0, duration: 0.15 });
             gsap.to(follower, { scale: 2.5, opacity: 0, duration: 0.3, ease: "power2.out" });
-            gsap.to(cursor, { scale: 0, duration: 0.2 });
+            gsap.to(cursor, { scale: 0, duration: 0.2, delay: 0.05 });
         };
 
         const onLeaveInteractive = () => {
+            isHovered = false;
             gsap.to(follower, { scale: 1, opacity: 1, duration: 0.3, ease: "power2.out" });
             gsap.to(cursor, { scale: 1, duration: 0.2 });
         };
 
         const addInteractiveListeners = () => {
-            const interactives = document.querySelectorAll("a, button, [data-cursor]");
+            const interactives = document.querySelectorAll("BeaconWrap, a, button, [data-cursor]");
             interactives.forEach((el) => {
                 el.addEventListener("mouseenter", onEnterInteractive);
                 el.addEventListener("mouseleave", onLeaveInteractive);
@@ -81,8 +118,9 @@ const CustomCursor = () => {
 
         return () => {
             window.removeEventListener("mousemove", moveCursor);
+            if (restTimer) clearTimeout(restTimer);
             observer.disconnect();
-            document.querySelectorAll("a, button, [data-cursor]").forEach((el) => {
+            document.querySelectorAll("BeaconWrap , a, button, [data-cursor]").forEach((el) => {
                 el.removeEventListener("mouseenter", onEnterInteractive);
                 el.removeEventListener("mouseleave", onLeaveInteractive);
             });
@@ -94,9 +132,9 @@ const CustomCursor = () => {
         const textEl = textRef.current;
         if (!textEl || !hasMovedRef.current) return;
         if (cursorText) {
-            gsap.to(textEl, { opacity: 1, y: "-=4", duration: 0.2 });
+            gsap.to(textEl, { opacity: 1, y: "-=4", duration: 0.4, ease: "power2.out" });
         } else {
-            gsap.to(textEl, { opacity: 0, duration: 0.15 });
+            gsap.to(textEl, { opacity: 0, duration: 0.35 });
         }
     }, [cursorText]);
 
@@ -108,7 +146,7 @@ const CustomCursor = () => {
             />
             <div
                 ref={cursorRef}
-                className="w-[10px] h-[10px] rounded-full bg-black fixed z-50 mix-blend-difference pointer-events-none"
+                className="w-[15px] h-[15px] rounded-full bg-black fixed z-50 mix-blend-difference pointer-events-none"
             />
             <div
                 ref={textRef}
