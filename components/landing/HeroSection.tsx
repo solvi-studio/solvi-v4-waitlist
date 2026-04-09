@@ -108,7 +108,7 @@ export function HeroSection() {
 
         <a
           ref={downloadButtonRef}
-          href="#download"
+          href="https://chromewebstore.google.com/detail/cahheohcondhknhpgdjnaebbadjcjgpm/preview?hl=en-AU&authuser=0"
           onMouseEnter={() => setCustomCursorText("yes click this")}
           onMouseLeave={() => setCustomCursorText("")}
           className="hero-content mt-8 inline-flex items-center justify-center px-8 py-3 rounded-2xl bg-[#73B7FF] text-black font-semibold text-sm hover:bg-[#9bdcee] transition-colors shadow-md shadow-blue-200"
