@@ -14,15 +14,16 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
         // Keep GSAP ScrollTrigger in sync with Lenis scroll position
         lenis.on("scroll", ScrollTrigger.update);
 
-        gsap.ticker.add((time) => {
+        const onTick = (time: number) => {
             lenis.raf(time * 1000);
-        });
+        };
+        gsap.ticker.add(onTick);
 
         gsap.ticker.lagSmoothing(1000 / 60);
 
         return () => {
             lenis.destroy();
-            gsap.ticker.remove((time) => lenis.raf(time * 1000));
+            gsap.ticker.remove(onTick);
         };
     }, []);
 

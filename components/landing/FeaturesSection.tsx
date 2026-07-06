@@ -1,14 +1,12 @@
 "use client";
 
-import { CarouselDots } from "@/components/ui/CarouselDots";
 import { FeatureCard } from "@/components/ui/FeatureCard";
 import { gsap } from "@/lib/gsap";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 export function FeaturesSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const [active, setActive] = useState(0);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -31,36 +29,37 @@ export function FeaturesSection() {
 
           <div className="feature-card" style={{ opacity: 0 }}>
             <FeatureCard
-              title={<>Organise your <strong>chaos</strong> creative space</>}
-              rotation={10}
-              image={<Image src="/yellow.png" alt="" width={200} height={200} style={{ width: "auto", height: "auto" }} className="object-contain" priority />}
-              caption={<>Automatically group your saved videos into creative patterns</>}
+              title="Brainstorm with mindmap"
+              rotation={-7}
+              image={<Image src="/redesign/card-mindmap.png" alt="" fill className="object-contain" priority />}
+              caption="Dump everything in your head. Solvi structures it into your story — angles, hooks, tone, format — all in one canvas."
+              bgColor="transparent"
               captionColor="#FBA400"
             />
           </div>
 
           <div className="feature-card" style={{ opacity: 0 }}>
             <FeatureCard
-              title={<><strong>Analyse</strong> video for you</>}
-              image={<Image src="/red.png" alt="" width={200} height={200} style={{ width: "auto", height: "auto" }} className="object-contain" />}
-              caption="Break down every save DNA so you can learn the strategy"
-              bgColor="#A7F3D0"
+              title="Summarise your idea"
+              image={<Image src="/redesign/card-shotlist.png" alt="" fill sizes="220px" className="object-contain" />}
+              caption="Your messy whiteboard becomes a clean, clustered shot list. AI organises what you created — not what everyone else is making."
+              bgColor="transparent"
               captionColor="#EF524E"
             />
           </div>
 
           <div className="feature-card" style={{ opacity: 0 }}>
             <FeatureCard
-              title={<>Turn your inspo to <strong>post-ready ideas</strong> </>}
-              rotation={-3}
-              image={<Image src="/blue.png" alt="" width={200} height={200} style={{ width: "auto", height: "auto" }} className="object-contain" />}
-              caption="Get instant, actionable prompts for your own niche content plan"
+              title="Arrange your schedule"
+              rotation={7}
+              image={<Image src="/redesign/card-calendar.png" alt="" fill className="object-contain" />}
+              caption="Tasks land on a real calendar. Pre-production, shoot day, post — your creative sprint is mapped out before you press record."
+              bgColor="transparent"
               captionColor="#3377FF"
             />
           </div>
 
         </div>
-        <CarouselDots count={3} active={active} onChange={setActive} />
       </div>
     </section>
   );

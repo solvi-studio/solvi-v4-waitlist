@@ -199,6 +199,7 @@ export function BeaconWrap({
   return (
     <span
       ref={wrapRef}
+      data-cursor
       className="relative inline-flex items-center justify-center"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}

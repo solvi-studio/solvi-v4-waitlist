@@ -1,27 +1,21 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
-import { Inter } from "next/font/google";
+import { Inter, Poppins } from "next/font/google";
 import CustomCursor from "@/components/customCursor";
 import { SmoothScroll } from "@/components/SmoothScroll";
 
 import "./globals.css";
 
-const editorial = localFont({
-  src: [
-    { path: "../public/fonts/editorial-new-font-family/PPEditorialNew-Ultralight-BF644b21500d0c0.otf", weight: "200", style: "normal" },
-    { path: "../public/fonts/editorial-new-font-family/PPEditorialNew-UltralightItalic-BF644b214ff1e9b.otf", weight: "200", style: "italic" },
-    { path: "../public/fonts/editorial-new-font-family/PPEditorialNew-Regular-BF644b214ff145f.otf", weight: "400", style: "normal" },
-    { path: "../public/fonts/editorial-new-font-family/PPEditorialNew-Italic-BF644b214fb0c0a.otf", weight: "400", style: "italic" },
-    { path: "../public/fonts/editorial-new-font-family/PPEditorialNew-Ultrabold-BF644b21500840c.otf", weight: "800", style: "normal" },
-    { path: "../public/fonts/editorial-new-font-family/PPEditorialNew-UltraboldItalic-BF644b214faef01.otf", weight: "800", style: "italic" },
-  ],
-  variable: "--font-editorial",
-  display: "swap",
-});
-
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
+  display: "swap",
+});
+
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-poppins",
   display: "swap",
 });
 
@@ -38,7 +32,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${editorial.variable} ${inter.variable} h-full antialiased`}
+      className={`${inter.variable} ${poppins.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <CustomCursor />

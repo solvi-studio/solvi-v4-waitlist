@@ -83,27 +83,27 @@ export function HeroSection() {
       <Mascot ref={mascotRef} delay={0.8} />
 
       {/* Hero content */}
-      <div className="flex flex-col items-center text-center px-6 pt-16 pb-24 max-w-xl mx-auto ">
-        <h1 className="hero-content text-7xl tracking-tight text-gray-900 font-editorial font-[800] italic">
-          Welcome
+      <div className="flex flex-col items-center text-center px-6 pt-16 pb-24 max-w-2xl mx-auto gap-5">
+        <h1 className="hero-content text-7xl tracking-tight text-gray-900 font-poppins font-bold">
+          Welcome to Solvi
         </h1>
 
-        <p className="hero-content mt-4 text-lg font-bold text-gray-900 flex flex-wrap items-center justify-center gap-2 font-editorial font-[400] italic mt-10">
-          <span ref={tonewRef} className="inline-block">to your new</span>
+        <p className="hero-content mt-10 text-xl text-gray-900 flex flex-wrap items-center justify-center gap-2 font-poppins font-bold">
+          <span ref={tonewRef} className="inline-block">your new</span>
             <span ref={pillRef} className="inline-flex">
               <BeaconWrap color="#F5C842" rayCount={20} gap={10} speed={1.5} sideWeight={2} rotate={-7} hoverOnly onHoverChange={handleBeaconHover}>
                 <span className="bg-[#F5C842] text-gray-900 font-bold px-4 py-1.5 rounded-full text-base -rotate-7">
-                  bookmark partner
+                  creative partner
                 </span>
               </BeaconWrap>
             </span>
 
-          <span ref={organisedRef} className="inline-block">organised</span>
-        </p>.
+          <span ref={organisedRef} className="inline-block">for brainstorming ideas</span>
+        </p>
 
 
-        <p className="hero-content mt-5 text-sm text-gray-500 max-w-[350px] leading-relaxed font-inter font-[800]">
-          Scroll less aimlessly, create more intentionally. Everything you save, finally in one place
+        <p className="hero-content mt-5 text-gray-900 max-w-[250px] leading-relaxed font-poppins font-medium">
+          Stay you in the age of generated everything
         </p>
 
         <a
@@ -113,7 +113,7 @@ export function HeroSection() {
           onMouseLeave={() => setCustomCursorText("")}
           className="hero-content mt-8 inline-flex items-center justify-center px-8 py-3 rounded-2xl bg-[#73B7FF] text-black font-semibold text-sm hover:bg-[#9bdcee] transition-colors shadow-md shadow-blue-200"
         >
-          <span style={{ display: "inline-flex", lineHeight: 1.15 }} className="text-2xl font-bold text-black">
+          <span style={{ display: "inline-flex", lineHeight: 1.15 }} className="text-2xl font-poppins font-bold text-black">
             {/* <RunTextAnim text="D" delay={0.3} len={3} total={0.41} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
             <RunTextAnim text="o" delay={0.17} len={2} total={0.13} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
             <RunTextAnim text="w" delay={1.08} len={3} total={0.22} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
@@ -122,9 +122,9 @@ export function HeroSection() {
             <RunTextAnim text="o" delay={1.19} len={2} total={0.13} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
             <RunTextAnim text="a" delay={1.06} len={2} total={0.23} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
             <RunTextAnim text="d" delay={1.03} len={3} total={0.41} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} /> */}
-            <RunTextAnim text="Download" delay={0.03} len={2} total={0.21} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
+            <RunTextAnim text="Brainstorm" delay={0.03} len={2} total={0.21} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
             <span aria-hidden="true" style={{ display: "inline-block", width: 12 }} />
-            <RunTextAnim text="Solvi" delay={0.03} len={3} total={0.41} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
+            <RunTextAnim text="your idea now" delay={0.03} len={3} total={0.41} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
 
             {/* <RunTextAnim text="S" delay={1.23} len={3} total={0.41} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
             <RunTextAnim text="o" delay={0.17} len={2} total={0.23} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />

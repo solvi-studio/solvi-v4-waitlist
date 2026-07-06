@@ -29,6 +29,8 @@ export function ScrollReveal({ children, delay = 0, direction = "up", className 
       );
     }, ref);
     return () => ctx.revert();
+    // Mount-only by design: direction/delay set the one-shot reveal tween for this instance.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

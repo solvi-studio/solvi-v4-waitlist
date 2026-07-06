@@ -102,7 +102,7 @@ const CustomCursor = () => {
         };
 
         const addInteractiveListeners = () => {
-            const interactives = document.querySelectorAll("BeaconWrap, a, button, [data-cursor]");
+            const interactives = document.querySelectorAll("a, button, [data-cursor]");
             interactives.forEach((el) => {
                 el.addEventListener("mouseenter", onEnterInteractive);
                 el.addEventListener("mouseleave", onLeaveInteractive);
@@ -120,7 +120,7 @@ const CustomCursor = () => {
             window.removeEventListener("mousemove", moveCursor);
             if (restTimer) clearTimeout(restTimer);
             observer.disconnect();
-            document.querySelectorAll("BeaconWrap , a, button, [data-cursor]").forEach((el) => {
+            document.querySelectorAll("a, button, [data-cursor]").forEach((el) => {
                 el.removeEventListener("mouseenter", onEnterInteractive);
                 el.removeEventListener("mouseleave", onLeaveInteractive);
             });
