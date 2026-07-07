@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
+import { ClerkProvider } from "@clerk/nextjs";
 import CustomCursor from "@/components/customCursor";
 import { SmoothScroll } from "@/components/SmoothScroll";
 
@@ -35,8 +36,10 @@ export default function RootLayout({
       className={`${inter.variable} ${poppins.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <CustomCursor />
-        <SmoothScroll>{children}</SmoothScroll>
+        <ClerkProvider>
+          <CustomCursor />
+          <SmoothScroll>{children}</SmoothScroll>
+        </ClerkProvider>
       </body>
     </html>
   );
