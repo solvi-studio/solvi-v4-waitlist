@@ -108,7 +108,7 @@ export function HeroSection() {
 
         <a
           ref={downloadButtonRef}
-          href="https://chromewebstore.google.com/detail/bistro/cahheohcondhknhpgdjnaebbadjcjgpm"
+          href="/waitlist"
           onMouseEnter={() => setCustomCursorText("yes click this")}
           onMouseLeave={() => setCustomCursorText("")}
           className="hero-content mt-8 inline-flex items-center justify-center px-8 py-3 rounded-2xl bg-[#73B7FF] text-black font-semibold text-sm hover:bg-[#9bdcee] transition-colors shadow-md shadow-blue-200"
@@ -122,9 +122,9 @@ export function HeroSection() {
             <RunTextAnim text="o" delay={1.19} len={2} total={0.13} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
             <RunTextAnim text="a" delay={1.06} len={2} total={0.23} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
             <RunTextAnim text="d" delay={1.03} len={3} total={0.41} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} /> */}
-            <RunTextAnim text="Brainstorm" delay={0.03} len={2} total={0.21} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
+            <RunTextAnim text="Join our" delay={0.03} len={2} total={0.21} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
             <span aria-hidden="true" style={{ display: "inline-block", width: 12 }} />
-            <RunTextAnim text="your idea now" delay={0.03} len={3} total={0.41} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
+            <RunTextAnim text="waitlist" delay={0.03} len={3} total={0.41} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
 
             {/* <RunTextAnim text="S" delay={1.23} len={3} total={0.41} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
             <RunTextAnim text="o" delay={0.17} len={2} total={0.23} hoverTargetRef={downloadButtonRef} style={{ height: "1.25em" }} />
