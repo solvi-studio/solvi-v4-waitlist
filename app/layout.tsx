@@ -36,7 +36,7 @@ export default function RootLayout({
       className={`${inter.variable} ${poppins.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <ClerkProvider>
+        <ClerkProvider proxyUrl={process.env.NEXT_PUBLIC_CLERK_PROXY_URL}>
           <CustomCursor />
           <SmoothScroll>{children}</SmoothScroll>
         </ClerkProvider>
