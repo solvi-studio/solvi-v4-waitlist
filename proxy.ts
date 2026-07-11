@@ -1,13 +1,19 @@
 import { clerkMiddleware } from "@clerk/nextjs/server";
+import { NextFetchEvent, NextRequest } from "next/server";
 
-export default async function proxy() {
-  return clerkMiddleware(
-    {
-      frontendApiProxy: {
-        enabled: process.env.NEXT_PUBLIC_ENABLE_CLERK_PROXY === 'true',
-      },
-    }
-  )
+const clerkHandler = clerkMiddleware(
+  {
+    frontendApiProxy: {
+      enabled: process.env.NEXT_PUBLIC_ENABLE_CLERK_PROXY === 'true',
+    },
+  }
+)
+
+export default async function proxy(
+  request: NextRequest,
+  event: NextFetchEvent
+) {
+  return clerkHandler(request, event);
 }
 
 export const config = {
